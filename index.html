@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ephibophetz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --void: #0b0912;
+      --deep: #12101a;
+      --surface: #1a1727;
+      --card: #211e30;
+      --border: rgba(255,255,255,0.08);
+      --border-glow: rgba(188,162,255,0.25);
+      --amber: #e8b84b;
+      --amber-dim: #a07c28;
+      --violet: #bca2ff;
+      --violet-dim: rgba(188,162,255,0.55);
+      --text-primary: #ede8f5;
+      --text-secondary: #9b94b3;
+      --text-muted: #5e5870;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--void);
+      color: var(--text-primary);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── STARFIELD ── */
+    .starfield {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .starfield::before,
+    .starfield::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 30% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 72% 38%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 20% 80%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 70%, rgba(255,255,255,0.45) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 72%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 15% 60%, rgba(188,162,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 80% 30%, rgba(232,184,75,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 38% 92%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 97% 50%, rgba(255,255,255,0.45) 0%, transparent 100%);
+    }
+    .starfield::after {
+      background-image:
+        radial-gradient(1px 1px at 22% 12%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 48% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 76% 65%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 25%, rgba(255,255,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 77%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(2px 2px at 92% 88%, rgba(188,162,255,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 8% 95%, rgba(255,255,255,0.45) 0%, transparent 100%);
+      opacity: 0.7;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 36px 0 28px;
+      border-bottom: 1px solid var(--border);
+    }
+    .wordmark {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 72px 0 48px;
+      text-align: center;
+    }
+
+    .hero-image-frame {
+      position: relative;
+      width: min(420px, 90vw);
+      margin-bottom: 52px;
+    }
+    .hero-image-frame::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border: 1px solid var(--border-glow);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-image-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 40px;
+      background: radial-gradient(ellipse at center, rgba(188,162,255,0.18) 0%, transparent 70%);
+      z-index: 0;
+    }
+    .hero-image-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(38px, 8vw, 68px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      margin-bottom: 24px;
+    }
+    h1 .dim { color: var(--violet-dim); }
+
+    .hero-rule {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--amber-dim), transparent);
+      margin: 0 auto 28px;
+    }
+
+    .hero-description {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.85;
+    }
+
+    /* ── CTA ── */
+    .cta-button {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--void);
+      background: var(--amber);
+      padding: 16px 40px;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 1px solid rgba(232,184,75,0.3);
+      transition: inset 0.2s ease;
+    }
+    .cta-button:hover { background: #f0cc6a; }
+    .cta-button:hover::before { inset: -7px; }
+
+    .cta-subtext {
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 72px 0;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-divider .glyph {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-label {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(11,9,18,0.5) 100%);
+      pointer-events: none;
+    }
+    .gallery-item img {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.4s ease;
+      filter: saturate(0.85);
+    }
+    .gallery-item:hover img { transform: scale(1.03); filter: saturate(1); }
+
+    .gallery-wide {
+      grid-column: 1 / -1;
+    }
+    .gallery-wide img {
+      height: 280px;
+      object-position: center 30%;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      padding: 48px 0;
+    }
+    .about-block {
+      border-left: 1px solid var(--border-glow);
+      padding-left: 24px;
+    }
+    .about-block h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+    .about-block p {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ── SECOND CTA ── */
+    .second-cta {
+      text-align: center;
+      padding: 64px 0 80px;
+      border-top: 1px solid var(--border);
+    }
+    .second-cta h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 400;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: 0.04em;
+    }
+    .second-cta p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      h1 { font-size: 38px; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+      .gallery-wide { grid-column: 1 / -1; }
+      .about { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-item img { transition: none; }
+      .cta-button, .cta-button::before { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="starfield" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <header>
+      <span class="wordmark">An Announcement</span>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-image-frame">
+        <img
+          src="https://i.postimg.cc/Dz5VKrvv/Ephibophetz.png"
+          alt="The Ephibophetz — cover art"
+          loading="eager"
+        />
+      </div>
+
+      <p class="eyebrow">Coming Soon</p>
+      <h1>The<br /><span class="dim">Ephiboph</span>etz</h1>
+      <div class="hero-rule"></div>
+
+      <p class="hero-description">
+        A book about the forgotten and those who find each other in the dark.
+        About the sacred weight of human rights denied — and the strange,
+        unnameable forces that gather when people refuse to be alone.
+      </p>
+
+      <a href="https://tally.so/r/PdeRle" class="cta-button" target="_blank" rel="noopener">
+        Get Notified
+      </a>
+      <p class="cta-subtext">Join the list. Be the first to know.</p>
+    </section>
+
+    <!-- Divider -->
+    <div class="section-divider"><span class="glyph">✦</span></div>
+
+    <!-- Gallery -->
+    <div class="gallery-label">From the Book</div>
+    <div class="gallery">
+      <div class="gallery-item gallery-wide">
+        <img
+          src="https://i.postimg.cc/kMHm4vxf/Heavenly-youth-and-earthly-observers.png"
+          alt="Heavenly youth and earthly observers"
+          loading="lazy"
+        />
+      </div>
+      <div class="gallery-item">
+        <img
+          src="https://i.postimg.cc/xdgrSvfH/Copy-of-Ephibophetz.png"
+          alt="Ephibophetz alternate cover"
+          loading="lazy"
+        />
+      </div>
+      <div class="gallery-item" style="grid-column: 2 / 4;">
+        <img
+          src="https://i.postimg.cc/fWPNLfxK/g-removebg-preview.png"
+          alt="Interior image"
+          loading="lazy"
+          style="background: var(--card);"
+        />
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="section-divider"><span class="glyph">✦</span></div>
+
+    <!-- About -->
+    <div class="about">
+      <div class="about-block">
+        <h3>Human Rights</h3>
+        <p>A story rooted in dignity, voice, and what every person deserves from the world around them — and what happens when that is taken away.</p>
+      </div>
+      <div class="about-block">
+        <h3>Spiritual Horror</h3>
+        <p>Something sacred moves through these pages. Something unsettling, too. The line between the holy and the horrifying is thinner than it looks.</p>
+      </div>
+      <div class="about-block">
+        <h3>Community</h3>
+        <p>People finding each other. Choosing each other. Building something real out of whatever the world has left them.</p>
+      </div>
+      <div class="about-block">
+        <h3>The Unknown</h3>
+        <p>There is no summary. The book speaks for itself — when the time comes. Some things are better encountered without a map.</p>
+      </div>
+    </div>
+
+    <!-- Second CTA -->
+    <div class="second-cta">
+      <h2>Something is gathering.</h2>
+      <p>Be there when it arrives.</p>
+      <a href="https://tally.so/r/PdeRle" class="cta-button" target="_blank" rel="noopener">
+        Sign Up Now
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>The Ephibophetz &nbsp;·&nbsp; All rights reserved</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

@@ -232,15 +232,12 @@
     .video-frame {
       position: relative;
       width: 100%;
-      /* 16:9 aspect ratio */
       padding-top: 56.25%;
       border: 1px solid var(--border-glow);
       background: var(--card);
-      /* subtle glow underneath */
       box-shadow: 0 8px 48px rgba(188,162,255,0.08);
     }
 
-    /* Amber corner accents — purely decorative, match the page's aesthetic */
     .video-frame::before,
     .video-frame::after {
       content: '';
@@ -353,6 +350,9 @@
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--amber);
+      margin-bottom: 0;
+    }
+    .about-block h3.has-description {
       margin-bottom: 12px;
     }
     .about-block p {
@@ -433,25 +433,16 @@
       <div class="hero-rule"></div>
 
       <p class="hero-description">
-        A book about the forgotten and those who find each other in the dark.
-        About the sacred weight of human rights denied — and the strange,
-        unnameable forces that gather when people refuse to be alone.
+        It has no summary, because it can not be perceived or comprehended. This truth is everywhere, but still nowhere. It is not found in most, nor hidden in the hearts of even half the population. Many seek it, but do not find it. One of a kind, forever. Forever hated for being forever true.
       </p>
 
       <a href="https://tally.so/r/PdeRle" class="cta-button" target="_blank" rel="noopener">
-        Get Notified
+        Sign Up on Book Wait-List
       </a>
       <p class="cta-subtext">Join the list. Be the first to know.</p>
     </section>
 
     <!-- ── VIDEO ── -->
-    <!--
-      HOW TO UPDATE:
-      1. Upload your video to YouTube.
-      2. In the src below, replace YOUR_VIDEO_ID with the 11-character ID
-         from your video's URL (e.g. youtube.com/watch?v=dQw4w9WgXcQ → dQw4w9WgXcQ).
-      3. Save. Done.
-    -->
     <section class="video-section">
       <p class="video-label">Watch</p>
       <div class="video-frame">
@@ -508,19 +499,16 @@
     <div class="about">
       <div class="about-block">
         <h3>Human Rights</h3>
-        <p>A story rooted in dignity, voice, and what every person deserves from the world around them — and what happens when that is taken away.</p>
       </div>
       <div class="about-block">
-        <h3>Spiritual Horror</h3>
+        <h3 class="has-description">Spiritual Horror</h3>
         <p>Something sacred moves through these pages. Something unsettling, too. The line between the holy and the horrifying is thinner than it looks.</p>
       </div>
       <div class="about-block">
         <h3>Community</h3>
-        <p>People finding each other. Choosing each other. Building something real out of whatever the world has left them.</p>
       </div>
       <div class="about-block">
         <h3>The Unknown</h3>
-        <p>There is no summary. The book speaks for itself — when the time comes. Some things are better encountered without a map.</p>
       </div>
     </div>
 
@@ -541,4 +529,4 @@
   </div>
 
 </body>
-</html>
+  </html>
